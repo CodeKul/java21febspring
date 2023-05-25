@@ -1,5 +1,6 @@
 package com.codekul.java21febspring;
 
+import com.codekul.java21febspring.di.Company;
 import com.codekul.java21febspring.ioc.Jio;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,9 @@ public class Java21febspringApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(Java21febspringApplication.class, args);
 		Jio jio = context.getBean(Jio.class);
 		jio.calling();
+
+		Company company = context.getBean(Company.class);
+		company.show();
 	}
 
 	@GetMapping("hello")
