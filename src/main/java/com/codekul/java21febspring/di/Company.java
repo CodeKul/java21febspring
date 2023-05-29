@@ -14,9 +14,9 @@ public class Company {
 
     @Autowired
     private Employee employee; //wiring
-
-     @Autowired
-    private Employee employee1; //wiring
+//
+//     @Autowired
+//    private Employee employee1; //wiring
 
 //    public void setEmployee(Employee employee) {//setter based injection
 //        this.employee = employee;
@@ -28,6 +28,6 @@ public class Company {
 
     public void show(){
         employee.emp();
-        employee1.emp();
+//        employee1.emp();
     }
 }

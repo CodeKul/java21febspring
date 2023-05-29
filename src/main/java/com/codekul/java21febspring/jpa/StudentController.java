@@ -17,18 +17,48 @@ public class StudentController {
         studentRepository.save(student);
         return "student saved.";
     }
+    @PutMapping("update")
+    public String updateStudent(@RequestBody Student student) {
+         Student st = studentRepository.getReferenceById(student.getId());
+         st.setAddress(student.getAddress());
+         st.setName(student.getName());
+         studentRepository.save(st);
+
+        return "student updated";
+    }
 
     @GetMapping("list")
     public List<Student> getStudentList() {
         return studentRepository.findAll();
     }
+//
+//    @GetMapping("getStudent/{id}")
+//    public Student getStudent(@PathVariable("id") Long id) {
+//        return studentRepository.getReferenceById(id);
+//    }
 
     @GetMapping("getStudent/{id}")
-    public Student getStudent(@PathVariable("id") Long id) {
-        return studentRepository.getReferenceById(id);
-    }
-   @GetMapping("getStudent/{id}")
     public Optional<Student> getStudent1(@PathVariable("id") Long id) {
         return studentRepository.findById(id);
     }
+
+     @DeleteMapping("delete/{id}")
+    public String deleteStudent(@PathVariable("id") Long id) {
+         studentRepository.deleteById(id);
+         return "record deleted..";
+    }
+     @DeleteMapping("delete1/{id}")
+    public String deleteStudent1(@PathVariable("id") Long id) {
+         Optional<Student> student = studentRepository.findById(id);
+         studentRepository.delete(student.get());
+         return "record deleted..";
+    }
+
+     @DeleteMapping("delete2/{id}")
+    public String deleteStudent2() {
+         studentRepository.deleteAll();
+         return "all record deleted..";
+    }
+
+
 }
