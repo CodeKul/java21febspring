@@ -3,6 +3,8 @@ package com.codekul.java21febspring.jpa;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Student {
@@ -14,6 +16,17 @@ public class Student {
     private String name;
 
     private String address;
+
+    private LocalDate dob;
+
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
 
     public Long getId() {
         return id;
