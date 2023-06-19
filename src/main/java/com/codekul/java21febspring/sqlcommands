@@ -1,0 +1,176 @@
+aibhav@vaibhav-HP-250-G8-Notebook-PC:~$ mysql -u root3 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.19-0ubuntu5 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use java21febspring
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++---------------------------+
+| Tables_in_java21febspring |
++---------------------------+
+| address                   |
+| admission                 |
+| courses                   |
+| customer                  |
+| employee                  |
+| product                   |
+| stud_courses              |
+| student                   |
++---------------------------+
+8 rows in set (0.00 sec)
+
+mysql> create table teacher (id int primary key,name varchar(20),address varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table subject(id int primary key,s_name varchar(20),t_id int, foreign key(t_id) references teacher(id));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc teacher;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc subject;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   | PRI | NULL    |       |
+| s_name | varchar(20) | YES  |     | NULL    |       |
+| t_id   | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table subject;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table subject(id int primary key,s_name varchar(20) not null,t_id int, foreign key(t_id) references teacher(id));
+
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table subject;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table subject(id int primary key,s_name varchar(20) not null,t_id int, foreign key(t_id) references teacher(id)); 
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc subject;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   | PRI | NULL    |       |
+| s_name | varchar(20) | NO   |     | NULL    |       |
+| t_id   | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into teacher(id,name,address) values(1,'Nilesh','Pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into teacher(id,name,address) values(2,'Makarand','Satara');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into teacher(id,name,address) values(3,'Manoj','Sangali');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into subject(id,s_name,t_id) values(1,'Chemistry',2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into subject(id,s_name,t_id) values(2,'Physics',1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into subject(id,s_name,t_id) values(3,'Maths',null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from teacher;
++----+----------+---------+
+| id | name     | address |
++----+----------+---------+
+|  1 | Nilesh   | Pune    |
+|  2 | Makarand | Satara  |
+|  3 | Manoj    | Sangali |
++----+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from subject;
++----+-----------+------+
+| id | s_name    | t_id |
++----+-----------+------+
+|  1 | Chemistry |    2 |
+|  2 | Physics   |    1 |
+|  3 | Maths     | NULL |
++----+-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select t.name,s.s_name from teacher t inner join subject s on t.id = s.t_id;
++----------+-----------+
+| name     | s_name    |
++----------+-----------+
+| Nilesh   | Physics   |
+| Makarand | Chemistry |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select t.name,s.s_name from teacher t left join subject s on t.id = s.t_id;
++----------+-----------+
+| name     | s_name    |
++----------+-----------+
+| Nilesh   | Physics   |
+| Makarand | Chemistry |
+| Manoj    | NULL      |
++----------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> select t.name,s.s_name from teacher t right join subject s on t.id = s.t_id;
++----------+-----------+
+| name     | s_name    |
++----------+-----------+
+| Makarand | Chemistry |
+| Nilesh   | Physics   |
+| NULL     | Maths     |
++----------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> select t.name,s.s_name from teacher t cross join subject s on t.id = s.t_id;
++----------+-----------+
+| name     | s_name    |
++----------+-----------+
+| Nilesh   | Physics   |
+| Makarand | Chemistry |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select t.name,s.s_name from teacher t left join subject s on t.id = s.t_id union all select t.name,s.s_name from teacher t right join subject s on t.id = s.t_id;
++----------+-----------+
+| name     | s_name    |
++----------+-----------+
+| Makarand | Chemistry |
+| Nilesh   | Physics   |
+| Manoj    | NULL      |
+| Makarand | Chemistry |
+| Nilesh   | Physics   |
+| NULL     | Maths     |
++----------+-----------+
+6 rows in set (0.01 sec)
