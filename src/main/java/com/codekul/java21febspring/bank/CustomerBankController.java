@@ -23,3 +23,21 @@ public class CustomerBankController {
     }
 
 }
+
+/**
+ * CREATE OR REPLACE FUNCTION public.fn_get_accountnumber_count()
+ *     RETURNS TABLE(accCount bigint)
+ *     LANGUAGE 'plpgsql'
+ *     COST 100
+ *     VOLATILE PARALLEL UNSAFE
+ *     ROWS 1000
+ *
+ * AS $BODY$
+ *
+ * begin
+ * 	return query select count(*) from customer_bank;
+ *     end;
+ * $BODY$;
+ *
+ * select * from fn_get_accountnumber_count();
+ */
