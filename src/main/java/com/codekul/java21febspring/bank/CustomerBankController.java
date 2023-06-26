@@ -22,6 +22,11 @@ public class CustomerBankController {
         return customerBankRepo.save(customer);
     }
 
+    @PostMapping("creditdebit")
+    private Double creditOrDebit(@RequestBody CreditDebitDto creditDebitDto){
+        return customerBankRepo.creditOrDebit(creditDebitDto.getType(), creditDebitDto.getAmount(), creditDebitDto.getAccountNumber());
+    }
+
 }
 
 /**
@@ -40,4 +45,27 @@ public class CustomerBankController {
  * $BODY$;
  *
  * select * from fn_get_accountnumber_count();
+ */
+
+/*
+ *
+ * select * from fn_credit_debit('Debit',2000,'0000000003')
+ *
+ * CREATE OR REPLACE FUNCTION public.fn_credit_debit(cbtype character varying,amount double precision,accountNumber character varying)
+ *     RETURNS TABLE(_balance double precision)
+ *     LANGUAGE 'plpgsql'
+ *     COST 100
+ *     VOLATILE PARALLEL UNSAFE
+ *     ROWS 1000
+ *
+ * AS $BODY$
+ *
+ * begin
+ * 	if(cbtype ='Credit') then
+ * 	return query update  customer_bank set balance = balance+amount where account_number =accountNumber returning balance;
+ * 	else
+ * 	return query update  customer_bank set balance = balance-amount where account_number =accountNumber returning balance;
+ * 	end if;
+ *     end;
+ * $BODY$;
  */
