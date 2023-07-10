@@ -18,10 +18,9 @@ public class UsersController {
 
     @PostMapping("saveUser")
     public String saveUser(@RequestBody Users users) {
-        usersRepository.save(users);
+       Users users1 =  usersRepository.save(users);
 //        https://myaccount.google.com/u/0/apppasswords
-        sendMail();
-        return "user saved.";
+        return users1.getUserName();
     }
 
 
@@ -35,19 +34,7 @@ public class UsersController {
         }
     }
 
-    private void sendMail() {
-        String from = "codekul.vaibhav@gmail.com";
-        String to = "bandalricha99@gmail.com";
 
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setFrom(from);
-        message.setTo(to);
-        message.setSubject("This is a plain text email");
-        message.setText("Hello guys! This is a plain text email.");
-
-        mailSender.send(message);
-    }
 }
 /*
 select * from fn_login('ak123','12345')
