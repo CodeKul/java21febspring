@@ -9,4 +9,9 @@ public class Boy {
         System.out.println("In boy study");
         return i;
     }
+
+//    public void exc(){
+//         int i=10/0;
+//        System.out.println(i);
+//    }
 }

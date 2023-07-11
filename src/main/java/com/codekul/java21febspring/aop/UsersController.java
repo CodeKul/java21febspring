@@ -1,11 +1,15 @@
 package com.codekul.java21febspring.aop;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+;
 
 @RestController
 public class UsersController {
@@ -16,11 +20,22 @@ public class UsersController {
     @Autowired
     private JavaMailSender mailSender;
 
+    Logger logger = LoggerFactory.getLogger(UsersController.class);
+
     @PostMapping("saveUser")
     public String saveUser(@RequestBody Users users) {
-       Users users1 =  usersRepository.save(users);
+        Users users1 = usersRepository.save(users);
 //        https://myaccount.google.com/u/0/apppasswords
         return users1.getUserName();
+    }
+
+    @GetMapping("getLogger")
+    public String getLogger() {
+        logger.info("Logger info");
+        logger.error("Logger Error");
+        logger.warn("Logger Warning");
+        logger.trace("Logger Trace");
+        return "logger";
     }
 
 

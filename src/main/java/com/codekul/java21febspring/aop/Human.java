@@ -1,6 +1,10 @@
 package com.codekul.java21febspring.aop;
 
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
@@ -23,9 +27,14 @@ public class Human {
     public void pointCut() {
     }
 
-    @AfterReturning(value = "pointCut()",returning = "value")
+    @AfterReturning(value = "pointCut()", returning = "value")
     public void test2(int value) {
-        System.out.println("In Aspect after"+value);
+        System.out.println("In Aspect after" + value);
+    }
+
+    @AfterThrowing(value = "execution(public void exc())", throwing = "value")
+    public void test3(JoinPoint joinPoint, Exception value) {
+        System.out.println("In Aspect after throwing " + value);
     }
 
 

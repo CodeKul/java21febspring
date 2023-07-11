@@ -25,6 +25,8 @@ public class Java21febspringApplication {
 		Boy boy = context.getBean(Boy.class);
 		boy.study1(4);
 
+//		boy.exc();
+
 		Girl girl = context.getBean(Girl.class);
 		girl.study();
 	}
